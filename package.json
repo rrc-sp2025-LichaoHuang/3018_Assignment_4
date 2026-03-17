@@ -6,9 +6,13 @@
   "directories": {
     "test": "test"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "test": "jest",
+  "test:watch": "jest --watch",
+  "test:coverage": "jest --coverage",
+"start": "ts-node src/server.ts"
+}
+,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rrc-sp2025-LichaoHuang/3018_Assignment_4.git"
