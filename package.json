@@ -6,13 +6,12 @@
   "directories": {
     "test": "test"
   },
-"scripts": {
-  "test": "jest",
-  "test:watch": "jest --watch",
-  "test:coverage": "jest --coverage",
-"start": "ts-node src/server.ts"
-}
-,
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "start": "ts-node src/server.ts"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rrc-sp2025-LichaoHuang/3018_Assignment_4.git"
@@ -26,8 +25,12 @@
   },
   "homepage": "https://github.com/rrc-sp2025-LichaoHuang/3018_Assignment_4#readme",
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "@types/node": "^25.5.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
