@@ -7,6 +7,7 @@ import {
 import { validateRequest } from "../middleware/validate";
 import { loanSchemas } from "../validation/loanSchemas";
 import { createLoan } from "../controllers/loanController";
+import authenticate from "../middleware/authenticate";
 
 const router: express.Router = express.Router();
 
@@ -20,7 +21,7 @@ router.get("/health", (_req: Request, res: Response) => {
 });
 
 // loans
-router.get("/loans", getAllLoans);
+router.get("/loans", authenticate, getAllLoans);
 
 router.get("/loans/:id", getLoanById);
 
@@ -29,5 +30,9 @@ router.post(
     validateRequest(loanSchemas.create),
     createLoan
 );
+
+// authenticate
+
+
 
 export default router;
