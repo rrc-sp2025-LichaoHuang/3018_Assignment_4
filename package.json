@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/rrc-sp2025-LichaoHuang/3018_Assignment_4/issues"
   },
-  "homepage": "https://github.com/rrc-sp2025-LichaoHuang/3018_Assignment_4#readme"
+  "homepage": "https://github.com/rrc-sp2025-LichaoHuang/3018_Assignment_4#readme",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
 }
