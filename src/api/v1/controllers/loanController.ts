@@ -37,3 +37,25 @@ export const getLoanById = (
         next(error);
     }
 };
+
+export const createLoan = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): void => {
+    try {
+        const newLoan = {
+            id: String(loans.length + 1),
+            ...req.body,
+            createdAt: new Date().toISOString(),
+        };
+
+        loans.push(newLoan);
+
+        res.status(HTTP_STATUS.CREATED).json(
+            successResponse(newLoan, "Loan created successfully")
+        );
+    } catch (error) {
+        next(error);
+    }
+};
