@@ -1,13 +1,11 @@
 import express, { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
-import {
-    getAllLoans,
-    getLoanById,
-} from "../controllers/loanController";
+import { getAllLoans, getLoanById,} from "../controllers/loanController";
 import { validateRequest } from "../middleware/validate";
 import { loanSchemas } from "../validation/loanSchemas";
 import { createLoan } from "../controllers/loanController";
 import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router: express.Router = express.Router();
 
@@ -27,11 +25,11 @@ router.get("/loans/:id", getLoanById);
 
 router.post(
     "/loans",
+    authenticate,
+    isAuthorized({ hasRole: ["manager", "admin"] }),
     validateRequest(loanSchemas.create),
     createLoan
 );
-
-// authenticate
 
 
 
