@@ -5,6 +5,7 @@ import {
     getLoanById,
     createLoan,
     deleteLoanHandler,
+    updateLoanHandler,
 } from "../controllers/loanController";
 import { validateRequest } from "../middleware/validate";
 import { loanSchemas } from "../validation/loanSchemas";
@@ -73,6 +74,19 @@ router.delete(
     authenticate,
     isAuthorized({ hasRole: ["admin"] }),
     deleteLoanHandler
+);
+
+/**
+ * PUT /loans/:id
+ * Update a loan
+ * Access: manager, admin
+ */
+router.put(
+    "/loans/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["manager", "admin"] }),
+    validateRequest(loanSchemas.update),
+    updateLoanHandler
 );
 
 export default router;

@@ -10,4 +10,15 @@ export const loanSchemas = {
                 .required(),
         }),
     },
+    update: {
+        body: Joi.object({
+            applicant: Joi.string().optional(),
+            amount: Joi.number().optional(),
+            status: Joi.string().optional(),
+        }),
+        params: Joi.object({
+            id: Joi.string().required(),
+        }),
+    }
 };
+

@@ -93,3 +93,40 @@ export const deleteLoanHandler = (
     next(error);
   }
 };
+
+export const updateLoanHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { applicant, amount, status } = req.body;
+
+    const loan = loans.find((loan) => loan.id === id);
+
+    if (!loan) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({
+        success: false,
+        error: {
+          message: "Loan not found",
+          code: "NOT_FOUND",
+        },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    if (applicant !== undefined) loan.applicant = applicant;
+    if (amount !== undefined) loan.amount = amount;
+    if (status !== undefined) loan.status = status;
+
+    return res.status(HTTP_STATUS.OK).json({
+      success: true,
+      message: "Loan updated successfully",
+      data: loan,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
