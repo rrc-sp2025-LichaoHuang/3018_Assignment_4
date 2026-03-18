@@ -59,3 +59,37 @@ export const createLoan = (
         next(error);
     }
 };
+
+export const deleteLoanHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    const index = loans.findIndex((loan) => loan.id === id);
+
+    if (index === -1) {
+      return res.status(HTTP_STATUS.NOT_FOUND).json({
+        success: false,
+        error: {
+          message: "Loan not found",
+          code: "NOT_FOUND",
+        },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    loans.splice(index, 1);
+
+    return res.status(HTTP_STATUS.OK).json({
+      success: true,
+      message: "Loan deleted successfully",
+      data: {},
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    next(error);
+  }
+};

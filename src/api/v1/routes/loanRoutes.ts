@@ -1,14 +1,22 @@
 import express, { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
-import { getAllLoans, getLoanById,} from "../controllers/loanController";
+import {
+    getAllLoans,
+    getLoanById,
+    createLoan,
+    deleteLoanHandler,
+} from "../controllers/loanController";
 import { validateRequest } from "../middleware/validate";
 import { loanSchemas } from "../validation/loanSchemas";
-import { createLoan } from "../controllers/loanController";
 import authenticate from "../middleware/authenticate";
 import isAuthorized from "../middleware/authorize";
 
 const router: express.Router = express.Router();
 
+/**
+ * GET /health
+ * Health check endpoint
+ */
 router.get("/health", (_req: Request, res: Response) => {
     res.status(HTTP_STATUS.OK).json({
         status: "OK",
@@ -18,11 +26,35 @@ router.get("/health", (_req: Request, res: Response) => {
     });
 });
 
-// loans
-router.get("/loans", authenticate, getAllLoans);
+/**
+ * GET /loans
+ * Get all loans
+ * Access: officer, manager, admin
+ */
+router.get(
+    "/loans",
+    authenticate,
+    isAuthorized({ hasRole: ["officer", "manager", "admin"] }),
+    getAllLoans
+);
 
-router.get("/loans/:id", getLoanById);
+/**
+ * GET /loans/:id
+ * Get a loan by ID
+ * Access: officer, manager, admin
+ */
+router.get(
+    "/loans/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["officer", "manager", "admin"] }),
+    getLoanById
+);
 
+/**
+ * POST /loans
+ * Create a new loan
+ * Access: manager, admin
+ */
 router.post(
     "/loans",
     authenticate,
@@ -31,6 +63,16 @@ router.post(
     createLoan
 );
 
-
+/**
+ * DELETE /loans/:id
+ * Delete a loan by ID
+ * Access: admin only
+ */
+router.delete(
+    "/loans/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"] }),
+    deleteLoanHandler
+);
 
 export default router;
